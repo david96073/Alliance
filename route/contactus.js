@@ -30,7 +30,8 @@ export default function contactUs(props) {
         </View>
         <View style={{flexDirection:'row',marginTop:10}}>
           <AntDesign name="phone" color={'#0303b4'} size={30} />
-          <Text style={styles.mapsDetail}>電話:+886286780720</Text>
+          <Text style={styles.mapsDetail}>電話:</Text>
+          <Text style={[styles.link,{marginTop:5}]} onPress={() => Linking.openURL("tel: 0286780720")}>(02)8678-0720</Text>
         </View>
         <View style={{flexDirection:'row',marginTop:10}}>
         <AntDesign name="chrome" color={'orange'} size={30} />

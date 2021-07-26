@@ -9,25 +9,25 @@ export default class home extends Component{
   return (
     <SafeAreaView style={{flex:1,backgroundColor: '#8fcbbc',}}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.container}>
-        
-          <TouchableOpacity style={styles.box} onPress={()=>{this.props.navigation.navigate('bloodSugarRecord')}}>
-            <Image source={require('../assets/img/bloodSugar.png')} style={{height:100,width:100,...styles.shadow}}></Image>
-            <Text style={styles.boxText}>血糖紀錄</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.box} onPress={()=>{this.props.navigation.navigate('weightRecord')}}>
-            <Image source={require('../assets/img/weight.png')} style={{height:100,width:100,...styles.shadow}}></Image>
-            <Text style={styles.boxText}>體重紀錄</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.box} onPress={()=>{this.props.navigation.navigate('bloodPressureRecord')}}>
-            <Image source={require('../assets/img/bloodPressure.png')} style={{height:100,width:100,...styles.shadow}}></Image>
-            <Text style={styles.boxText}>血壓紀錄</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.box} onPress={()=>{this.props.navigation.navigate('bloodPressureRecord')}}>
-            <Image source={require('../assets/img/bodyFat.png')} style={{height:100,width:100,...styles.shadow}}></Image>
-            <Text style={styles.boxText}>體脂紀錄</Text>
-          </TouchableOpacity>
-        
+        <View style={{alignItems:'center'}}>
+          <View style={styles.container}>      
+            <TouchableOpacity style={styles.box} onPress={()=>{this.props.navigation.navigate('bloodSugarRecord')}}>
+              <Image source={require('../assets/img/bloodSugar.png')} style={{height:100,width:100,...styles.shadow}}></Image>
+              <Text style={styles.boxText}>血糖紀錄</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.box} onPress={()=>{this.props.navigation.navigate('weightRecord')}}>
+              <Image source={require('../assets/img/weight.png')} style={{height:100,width:100,...styles.shadow}}></Image>
+              <Text style={styles.boxText}>體重紀錄</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.box} onPress={()=>{this.props.navigation.navigate('bloodPressureRecord')}}>
+              <Image source={require('../assets/img/bloodPressure.png')} style={{height:100,width:100,...styles.shadow}}></Image>
+              <Text style={styles.boxText}>血壓紀錄</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.box} onPress={()=>{this.props.navigation.navigate('bodyfatRecord')}}>
+              <Image source={require('../assets/img/bodyFat.png')} style={{height:100,width:100,...styles.shadow}}></Image>
+              <Text style={styles.boxText}>體脂紀錄</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     flexWrap:'wrap',
     justifyContent:'space-evenly',
+    marginTop:150,
   },
   box:{
     height:(Dimensions.get('window').width - 60)/2,

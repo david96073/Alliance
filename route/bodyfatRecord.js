@@ -2,9 +2,8 @@ import React,{useState,useRef} from 'react';
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View,Image,Dimensions,TextInput } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import ActionSheet from 'react-native-actionsheet';
 
-export default function bloodSugarRecords(props) {
+export default function weightRecords(props) {
   const [data ,setdata] = useState('0')  
   const ref_inputText = useRef();
   const recordSave = () =>{
@@ -20,31 +19,6 @@ export default function bloodSugarRecords(props) {
   const saveButton = () =>{
     props.navigation.pop()
   }
-
-  let actionTypeSheet = useRef();
-  let TypeOptionArray = [
-    'DS-A','DS-E','DS-W','cancel' 
-  ];
-
-
-  const showTypeSheet = () =>{
-    actionTypeSheet.current.show();
-  }
-
-  const [Type,setType] = useState('DS-A')
-  
-
-  const chooseType = (index) => {
-    if (TypeOptionArray[index] === 'DS-A') {
-      setType(' DS-A');
-    } else if (TypeOptionArray[index] === 'DS-E') {
-      setType('DS-E');
-    }else if (TypeOptionArray[index] === 'DS-W') {
-      setType('DS-W');
-    };
-  };
-
-
   return (
     <SafeAreaView style={{flex:1}}>
       <View style={styles.header}>
@@ -54,49 +28,37 @@ export default function bloodSugarRecords(props) {
             </TouchableOpacity>
         </View>
         <View style={{justifyContent:'center'}}>
-            <Text style={styles.headerTitle}>血糖紀錄</Text>
+            <Text style={styles.headerTitle}>體脂紀錄</Text>
         </View>
       </View>
       <View style={styles.container}>
-          <TouchableOpacity style={styles.action} onPress={showTypeSheet}>
-            <View style={{marginLeft:20,flexDirection:'row'}}>
-              <Text style={{fontSize:30,color:'#5d81f6'}}>型號</Text>
-              <Image source={require('../assets/img/rightarrow.png')} style={styles.rightArrow}></Image>
-            </View>
-            <View style={{marginRight:20,flexDirection:'row'}}>
-              <FontAwesome5 style={{marginRight:10,marginTop:5,}} name='mobile-alt' color={'#5d81f6'} size={30} />
-              <Text style={{fontSize:30,color:'black'}}>{Type}</Text>
-            </View>
-            <ActionSheet 
-            ref={actionTypeSheet}
-            title ={'選擇型號'}
-            options ={TypeOptionArray}
-            cancelButtonIndex ={3}
-            destructiveButtonIndex ={4}
-            
-            onPress ={(index) =>{
-              chooseType(index);
-            }}
-              
-          />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.action}>
-            <View style={{marginLeft:20,flexDirection:'row'}}>
-              <Text style={{fontSize:30,color:'#5d81f6'}}>port </Text>
-              <Image source={require('../assets/img/rightarrow.png')} style={styles.rightArrow}></Image>
-            </View>
-            <View style={{marginRight:20,flexDirection:'row'}}>
-              {/* <FontAwesome5 style={{marginRight:10,marginTop:5,}} name='mobile-alt' color={'#5d81f6'} size={30} /> */}
-              <Text style={{fontSize:30,color:'black'}}></Text>
-            </View>
-          </TouchableOpacity>
+        <TouchableOpacity style={styles.action}>
+          <View style={{marginLeft:20,flexDirection:'row'}}>
+            <Text style={{fontSize:30,color:'#5d81f6'}}>型號</Text>
+            <Image source={require('../assets/img/rightarrow.png')} style={styles.rightArrow}></Image>
+          </View>
+          <View style={{marginRight:20,flexDirection:'row'}}>
+            <FontAwesome5 style={{marginRight:10,marginTop:5,}} name='weight' color={'#5d81f6'} size={30} />
+            <Text style={{fontSize:30,color:'black'}}></Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.action}>
+          <View style={{marginLeft:20,flexDirection:'row'}}>
+            <Text style={{fontSize:30,color:'#5d81f6'}}>port </Text>
+            <Image source={require('../assets/img/rightarrow.png')} style={styles.rightArrow}></Image>
+          </View>
+          <View style={{marginRight:20,flexDirection:'row'}}>
+            {/* <FontAwesome5 style={{marginRight:10,marginTop:5,}} name='mobile-alt' color={'#5d81f6'} size={30} /> */}
+            <Text style={{fontSize:30,color:'black'}}></Text>
+          </View>
+        </TouchableOpacity>
         <View style={{flex:2,alignItems: 'center',justifyContent: 'center'}}>
           <Text style={{fontSize:70,fontWeight:'bold',color:'#626266'}}
           editable={true}
-          keyboardType = "default">{data} mmHg</Text>
+          keyboardType = "default">{data} %</Text>
           <View style={{display:'none'}}>
           <TextInput
-          maxLength={3}
+          maxLength={2}
           ref = {ref_inputText}
           keyboardType ='numeric'
           returnKeyTyp='next'
@@ -116,7 +78,7 @@ export default function bloodSugarRecords(props) {
             <Image source={require('../assets/img/keyboard.png')}></Image>
             <Text style={{fontSize:30,fontWeight:'bold'}}>手寫</Text>
           </TouchableOpacity>
-        </View>
+      </View>
       </View>
     </SafeAreaView>
    );
@@ -163,13 +125,13 @@ const styles = StyleSheet.create({
   TextLeft:{
     fontSize:25,
     marginLeft:20,
-    color:'#5d81f6',
+    color:'#0303b4',
     fontWeight:'bold',
   },
   TextRight:{
     fontSize:25,
     marginRight:20,
-    color:'#5d81f6',
+    color:'#0303b4',
     fontWeight:'bold',
   },
   InputButton:{

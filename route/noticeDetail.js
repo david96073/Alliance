@@ -12,7 +12,7 @@ export default function noticeDetail(props) {
         <View style={styles.header}>
           <View>
             <TouchableOpacity onPress={()=>{props.navigation.pop()}}>
-              <AntDesign name="left" color={'black'} size={30} />
+              <AntDesign style={{marginLeft:5}} name="left" color={'white'} size={30} />
             </TouchableOpacity>
           </View>
           <View style={{justifyContent:'center'}}>
@@ -49,10 +49,10 @@ const styles = StyleSheet.create({
     alignItems:'center',
   },
   headerTitle:{
-    fontSize:25,
+    fontSize:30,
     fontWeight:'bold',
-    color:'black',
-    marginLeft: (Dimensions.get('window').width - 180)/2,
+    color:'white',
+    marginLeft: (Dimensions.get('window').width - 190)/2,
   },
   seperator:{
       height:1,
