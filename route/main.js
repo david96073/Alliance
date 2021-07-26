@@ -7,6 +7,7 @@ import chartRoute from './chart'
 import MoreRoute from './more'
 import HomeRoute from './home'
 import noticeRoute from './notice'
+import recordRoute from './record'
 
 function MyTabs() {
   return (
@@ -25,24 +26,6 @@ function MyTabs() {
          ...styles.shadow
        }
      }}>
-      <Tab.Screen name="Home" component={HomeRoute} 
-        options={{
-          tabBarIcon: (focused) => (
-            <View style={{alignItems:'center',justifyContent:'center',top:10}}>
-              <Image
-              source={require('../assets/img/homeIcon.png')}
-              resizeMode='contain'
-              style={{
-                width:30,
-                height:30,
-                tintColor: focused ? '#e32f45' : '#748c94',
-              }}></Image>
-              <Text style={{color: focused ? '#e32f45' : '#748c94',}}>
-                首頁
-              </Text>
-            </View>
-          ),
-        }}/>
       <Tab.Screen name="chart" component={chartRoute} 
         options={{
           tabBarIcon: (focused) => (
@@ -59,6 +42,38 @@ function MyTabs() {
                 分析
               </Text>
             </View>
+          ),
+        }} />
+      <Tab.Screen  name="record" component={recordRoute} 
+        options={{
+          tabBarIcon: (focused) => (
+            <View style={{alignItems:'center',justifyContent:'center',top:10}}>
+              <Image
+              source={require('../assets/img/findIcon.png')}
+              resizeMode='contain'
+              style={{
+                width:30,
+                height:30,
+                tintColor: focused ? '#e32f45' : '#748c94',
+              }}></Image>
+              <Text style={{color: focused ? '#e32f45' : '#748c94',}}>
+                查詢
+              </Text>
+            </View>
+          ),
+        }}/>
+        
+        <Tab.Screen name="Home" component={HomeRoute} 
+        options={{
+          tabBarIcon: (focused) => (         
+              <Image
+              source={require('../assets/img/addIcon.png')}
+              resizeMode='contain'
+              style={{
+                width:50,
+                height:50,
+                tintColor:'#e32f45',
+              }}></Image>
           ),
         }} />
       <Tab.Screen name="notice" component={noticeRoute}  

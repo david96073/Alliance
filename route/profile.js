@@ -1,14 +1,20 @@
 import React,{useRef, useState} from 'react';
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View,Image,Dimensions, TextInput, ImageBackground, Modal} from 'react-native';
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View,Image,Dimensions, TextInput, ImageBackground, Modal,Platform,Button} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ActionSheet from 'react-native-actionsheet';
-import { color } from 'react-native-reanimated';
 import ModalDropdown from 'react-native-modal-dropdown';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import * as ImagePicker from 'expo-image-picker'
+
+
+
+
 export default function profile(props){
+  //性別跟圖片彈跳式窗
   let actionSheet = useRef();
   let action2Sheet = useRef();
   let genderOptionArray = [
@@ -32,8 +38,11 @@ export default function profile(props){
   const [HeightmodalVisible,setHeightModalvisible] = useState(false)
   const [WeightmodalVisible,setWeightModalvisible] = useState(false)
   const [username,setUsername] = useState('辛睿恩')
+  const [tempUsername,setTempUsername] = useState(username)
   const [height,setHeight] = useState('190')
+  const [tempHeight,setTempHeight] = useState(height)
   const [weight,setWeight] = useState('50')
+  const [tempWeight,setTempWeight] = useState(weight)
 
   const chooseGender = (index) => {
     if (genderOptionArray[index] === '男性') {
@@ -43,13 +52,34 @@ export default function profile(props){
       setGender('女性');
       setGenderIcon('mars')
     }
-  } 
-  
+  }
+  //選擇圖片
+  const ChoosePhoto = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
+  //修改名字彈跳視窗
   const changeUserModalVisible = () => {
     setUserModalvisible(true)
   }
 
-  const chooseUserModalVisible = () => {
+  const doneUserModalVisible = () => {
+    setTempUsername(username)
+    setUserModalvisible({UsermodalVisible:false})
+  }
+
+  const cancelUserModalVisible = () => {
+    setUsername(tempUsername)
     setUserModalvisible({UsermodalVisible:false})
   }
 
@@ -57,7 +87,13 @@ export default function profile(props){
     setHeightModalvisible(true)
   }
 
-  const chooseHeightModalVisible = () => {
+  const cancelHeightModalVisible = () => {
+    setHeight(tempHeight)
+    setHeightModalvisible({HeightmodalVisible:false})
+  }
+
+  const doneHeightModalVisible = () => {
+    setTempHeight(height)
     setHeightModalvisible({HeightmodalVisible:false})
   }
 
@@ -65,12 +101,39 @@ export default function profile(props){
     setWeightModalvisible(true)
   }
 
-  const chooseWeightModalVisible = () => {
+  const cancelWeightModalVisible = () => {
+    setWeight(tempWeight)
     setWeightModalvisible({WeightmodalVisible:false})
   }
 
+  const doneWeightModalVisible = () => {
+    setTempWeight(weight)
+    setWeightModalvisible({WeightmodalVisible:false})
+  }
+  // 修改DATE Time
+  const [date, setDate] = useState(new Date(1598051730000));
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(true);
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === 'ios');
+    setDate(currentDate);
+  };
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
+
   return (
     <SafeAreaView style={{flex:1,backgroundColor: '#8fcbbc',}}>
+          
       <View style={styles.header}>
         <View style={{justifyContent:'flex-start',marginLeft:10}}>
             <TouchableOpacity onPress={()=>{props.navigation.pop()}}>
@@ -97,7 +160,7 @@ export default function profile(props){
           cancelButtonIndex ={1}
           destructiveButtonIndex ={0}
           onPress ={(index) =>{
-            alert(index)
+            ChoosePhoto(index)
           }}
             
         />
@@ -117,12 +180,12 @@ export default function profile(props){
                   </View>
                   <View style={styles.modalButton}>
                     <View style={{borderWidth:'3',borderColor:'#fff',borderRadius: 10,backgroundColor:'#fff'}}>
-                    <TouchableOpacity style={{alignItems:'center',justifyContent:'center',height:40,width:80}} onPress={chooseUserModalVisible}>
+                    <TouchableOpacity style={{alignItems:'center',justifyContent:'center',height:40,width:80}} onPress={cancelUserModalVisible}>
                       <Text style={{justifyContent:'center',alignItems:'center',fontSize:20,fontWeight:'bold',color:'#8fcbbc'}}>取消</Text>
                     </TouchableOpacity>
                     </View>
                     <View style={{borderWidth:'3',borderColor:'#fff',borderRadius: 10,backgroundColor:'#fff'}}>
-                    <TouchableOpacity style={{alignItems:'center',justifyContent:'center',height:40,width:80}} onPress={chooseUserModalVisible}>
+                    <TouchableOpacity style={{alignItems:'center',justifyContent:'center',height:40,width:80}} onPress={doneUserModalVisible}>
                     <Text style={{justifyContent:'center',alignItems:'center',fontSize:20,fontWeight:'bold',color:'#8fcbbc'}}>完成</Text>
                     </TouchableOpacity>
                     </View>
@@ -157,16 +220,16 @@ export default function profile(props){
                 <View style={styles.modalContainer}>
                   <Text style={{fontSize:20,fontWeight:'bold',color:'#666666',marginTop:5,marginBottom:15}}>修改身高</Text>
                   <View style={styles.modalTextInput}>
-                    <TextInput style={{height:30}} onChangeText={(text)=>setHeight(text)} keyboardType='numeric' placeholder='輸入身高' placeholderTextColor='gray'></TextInput>
+                    <TextInput maxLength={3} style={{height:30}} onChangeText={(text)=>setHeight(text)} keyboardType='numeric' placeholder='輸入身高' placeholderTextColor='gray'></TextInput>
                   </View>
                   <View style={styles.modalButton}>
                     <View style={{borderWidth:'3',borderColor:'#fff',borderRadius: 10,backgroundColor:'#fff'}}>
-                    <TouchableOpacity style={{alignItems:'center',justifyContent:'center',height:40,width:80}} onPress={chooseHeightModalVisible}>
+                    <TouchableOpacity style={{alignItems:'center',justifyContent:'center',height:40,width:80}} onPress={cancelHeightModalVisible}>
                       <Text style={{justifyContent:'center',alignItems:'center',fontSize:20,fontWeight:'bold',color:'#8fcbbc'}}>取消</Text>
                     </TouchableOpacity>
                     </View>
                     <View style={{borderWidth:'3',borderColor:'#fff',borderRadius: 10,backgroundColor:'#fff'}}>
-                    <TouchableOpacity style={{alignItems:'center',justifyContent:'center',height:40,width:80}} onPress={chooseHeightModalVisible}>
+                    <TouchableOpacity style={{alignItems:'center',justifyContent:'center',height:40,width:80}} onPress={doneHeightModalVisible}>
                     <Text style={{justifyContent:'center',alignItems:'center',fontSize:20,fontWeight:'bold',color:'#8fcbbc'}}>完成</Text>
                     </TouchableOpacity>
                     </View>
@@ -186,16 +249,16 @@ export default function profile(props){
                 <View style={styles.modalContainer}>
                   <Text style={{fontSize:20,fontWeight:'bold',color:'#666666',marginTop:5,marginBottom:15}}>修改體重</Text>
                   <View style={styles.modalTextInput}>
-                    <TextInput style={{height:30}} onChangeText={(text)=>setWeight(text)} keyboardType='numeric' placeholder='輸入體重' placeholderTextColor='gray'></TextInput>
+                    <TextInput maxLength={3} style={{height:30}} onChangeText={(text)=>setWeight(text)} keyboardType='numeric' placeholder='輸入體重' placeholderTextColor='gray'></TextInput>
                   </View>
                   <View style={styles.modalButton}>
                     <View style={{borderWidth:'3',borderColor:'#fff',borderRadius: 10,backgroundColor:'#fff'}}>
-                    <TouchableOpacity style={{alignItems:'center',justifyContent:'center',height:40,width:80}} onPress={chooseWeightModalVisible}>
+                    <TouchableOpacity style={{alignItems:'center',justifyContent:'center',height:40,width:80}} onPress={cancelWeightModalVisible}>
                       <Text style={{justifyContent:'center',alignItems:'center',fontSize:20,fontWeight:'bold',color:'#8fcbbc'}}>取消</Text>
                     </TouchableOpacity>
                     </View>
                     <View style={{borderWidth:'3',borderColor:'#fff',borderRadius: 10,backgroundColor:'#fff'}}>
-                    <TouchableOpacity style={{alignItems:'center',justifyContent:'center',height:40,width:80}} onPress={chooseWeightModalVisible}>
+                    <TouchableOpacity style={{alignItems:'center',justifyContent:'center',height:40,width:80}} onPress={doneWeightModalVisible}>
                     <Text style={{justifyContent:'center',alignItems:'center',fontSize:20,fontWeight:'bold',color:'#8fcbbc'}}>完成</Text>
                     </TouchableOpacity>
                     </View>
@@ -206,11 +269,24 @@ export default function profile(props){
         </TouchableOpacity>
         <View style={styles.action}>
           <FontAwesome5 style={{marginLeft:30,marginRight:10}} name="id-card" color={'#FF6347'} size={30} />
-          <TextInput style={{fontSize:20}}
-            placeholder='年齡'
-            placeholderTextColor='#666666'
-            autoCorrect={false}
-          ></TextInput>
+          <View>
+      <View>
+        <Button onPress={showDatepicker} title="你的出生日期"  color={'#666666'} ></Button>
+      
+
+      {show && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode={mode}
+          
+          display="default"
+          onChange={onChange}
+        />
+      )}
+      </View>
+    </View>
+          
         </View>
         <View style={styles.action}>
           <FontAwesome5 style={{marginLeft:30,marginRight:10}} name="disease" color={'#FF6347'} size={30} />

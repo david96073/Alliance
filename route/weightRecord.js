@@ -58,6 +58,7 @@ export default function weightRecords(props) {
           keyboardType = "default">{data} kg</Text>
           <View style={{display:'none'}}>
           <TextInput
+          maxLength={3}
           ref = {ref_inputText}
           keyboardType ='numeric'
           returnKeyTyp='next'

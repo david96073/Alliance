@@ -23,7 +23,8 @@ import bloodSugarRecordRoute from './route/bloodSugarRecord'
 import weightRecordRoute from './route/weightRecord'
 import noticeRoute from './route/notice'
 import noticeDetailRoute from './route/noticeDetail'
-
+import recordRoute from './route/record'
+import bodyfatRecordRoute from './route/bodyfatRecord'
 
 //const db = firebase.firestore();
 const Stack = createStackNavigator()
@@ -48,8 +49,10 @@ export default class App extends Component{
         <Stack.Screen name='bloodPressureRecord' component={bloodPressureRecordRoute}></Stack.Screen>
         <Stack.Screen name='bloodSugarRecord' component={bloodSugarRecordRoute}></Stack.Screen>
         <Stack.Screen name='weightRecord' component={weightRecordRoute}></Stack.Screen>
+        <Stack.Screen name='bodyfatRecord' component={bodyfatRecordRoute}></Stack.Screen>
         <Stack.Screen name='notice' component={noticeRoute}></Stack.Screen>
         <Stack.Screen name='noticeDetail' component={noticeDetailRoute}></Stack.Screen>
+        <Stack.Screen name='record' component={recordRoute}></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );

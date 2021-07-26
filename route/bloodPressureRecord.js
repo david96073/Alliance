@@ -59,6 +59,7 @@ return (
           keyboardType = "default">{data} mg/dl</Text>
           <View style={{display:'none'}}>
           <TextInput
+          maxLength={3}
           ref = {ref_inputText}
           keyboardType ='numeric'
           returnKeyTyp='next'

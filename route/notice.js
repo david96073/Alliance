@@ -84,7 +84,7 @@ export default function notice(props) {
   return (
     <SafeAreaView style={{flex:1,backgroundColor: '#8fcbbc',}}>
       <View style =  {{flex:1,backgroundColor: '#8fcbbc', justifyContent: 'flex-start'}}>
-          <Text style = {{fontSize: 40, marginLeft : 10}}>最新通知</Text>
+          <Text style = {{fontSize: 36, marginLeft : 10,color:'white',fontWeight:'bold',marginTop:5}}>最新通知</Text>
       </View>
       <View style={styles.container}>
         <FlatList
